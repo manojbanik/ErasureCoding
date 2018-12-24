@@ -65,9 +65,6 @@ void OpenInAndOutFiles(void)
 }
 
 
-
-
-
 unsigned int prim_poly_4 = 023;
 unsigned int prim_poly_8 = 0435;
 unsigned int prim_poly_16 = 0210013;
@@ -102,29 +99,7 @@ void setup_tables(void)
 
 		if (b & x_to_w) b = (b ^ prim_poly)&(x_to_w-1);
 
-		/*
-		{
-
-			//printf("\n\nb = %u, (b ^ prim_poly) = %d, ", b, b ^ prim_poly);
-
-			b1 = b; printf("\n\nb = %u", b);
-
-			b = (b ^ prim_poly);
-
-			b1 = (b1 ^ prim_poly)&(x_to_w-1);
-
-			if(b!=b1)printf("b = %u, b1 = %u", b, b1);
-		}
-		*/
-
-		//if (b & x_to_w) b = (b ^ prim_poly);
-	}
-
-	//logfile = fopen("LogTable2.txt", "wt");
-
-	//for (log = 1; log < x_to_w-1; log++) fprintf(logfile, "%6u%6u%6u\n",log, gflog[log], gfilog[log]);
-
-	//fclose(logfile);
+		
 }
 
 unsigned short AddSub(unsigned short a, unsigned short b)		//	if a & b are same then result will be 0
@@ -152,7 +127,7 @@ int gDiv(int a, int b)
 	int diff_log;
 
 	if (a == 0) return 0;
-	if (b == 0) return -1; 			/* Can’t divide by 0 */
+	if (b == 0) return -1; 			/* Canâ€™t divide by 0 */
 
 	diff_log = gflog[a] - gflog[b];
 
@@ -189,14 +164,6 @@ void setup_matrixFI(void)
 
 	for(i=0; i<N; i++) matrixI[i][i] = 1;
 
-	//printf("\n\nMatrix I...\n\n");
-
-	/*
-	for(i=0;i<N;i++){
-		for(j=0;j<N;j++) printf("%10d", matrixI[i][j]);
-		printf("\n\n");
-	}
-	*/
 
 }
 
@@ -297,10 +264,7 @@ void find_Checksum(void)
 		{
 			k = AddSub(k, gMult(Device[j], matrixF[i][j]));
 		}
-		//	Checksum[i-1] = k; printf("%d", Checksum[i-1]);
-
-		//if(k<0) {printf("\n\n\nK is %d", k); getch();}
-
+		
 
 		Device[N+i] = k;
 		//printf("%d", Device[N+i]);		//	Device[N+ indicates checksum bytes
@@ -317,12 +281,6 @@ void FragmentFile(void)
 
 	printf("\n\nWriting data to files...\n\n");
 
-
-
-
-	//if(ch<0) {printf("\n\n\n************ ch is %d", ch); getch();}
-
-	//printf("%c", ch);
 
 	i=0;
 
@@ -347,12 +305,7 @@ void FragmentFile(void)
 			}
 		}
 
-		//ch = fgetc(InFile); //file_ch++;
-
-		//if(ch<0) {printf("\n\n\n************ ch is %d, pos = %d", ch, file_ch); getch();}
-
-		//if(ch != EOF)printf("%c", ch);
-
+		
 	}
 
 	//printf("\n\n%d bytes are Written...\n\n", file_ch);
@@ -373,26 +326,6 @@ void FragmentFile(void)
 	for(int j=0; j<N+M; j++) fclose(OutFiles[j]);
 }
 
-/*
-void recoverDevice(, int E[])
-{
-	int BB[N][N], i, j;
-
-	gInverse(AA, BB);
-
-	printf("\n\nRecovered Device...\n\n");
-
-	for(i=0; i<N; i++)
-	{
-		Device[i]=0;
-		for(j=0; j<N; j++) Device[i] = AddSub(Device[i], gMult(BB[i][j], E[j]));
-
-		printf("%10d", Device[i]);
-	}
-
-}
-
-*/
 
 void RecoverSystem(int failList[], int nn)
 {
@@ -457,17 +390,7 @@ void RecoverSystem(int failList[], int nn)
 		}
 	}
 
-	/*
-	printf("\n\nNew matrix AA ...\n\n");
-
-	for(i=0; i<N; i++) {
-		for(int j=0; j<N; j++) printf("%10d", AA[i][j]);
-
-		printf("\n\n");
-	}
-
-	*/
-
+	
 	int BB[N][N];
 
 	gInverse(AA, BB);
@@ -524,19 +447,12 @@ int main(void)
 
 	setup_tables();
 
-	//printf("gPower(4,2) = %d", gPower(4, 2));
-
-	//printf("\n\ngMult(4,4) = %d", gMult(4, 4));
-
+	
 	setup_matrixFI();
 
 	OpenInAndOutFiles();
 
 	FragmentFile();
-
-
-
-
 
 
 	int nn;
